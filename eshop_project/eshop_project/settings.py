@@ -151,14 +151,14 @@ TWILIO_PHONE_NUMBER = '+'
 # DEBUG = False
 # ALLOWED_HOSTS = ["*"]
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECRET_KEY = os.environ.get('SECRET_KEY')
 # DEBUG = False
 # ALLOWED_HOSTS = ['*']
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': "",
-    'API_KEY': "",
-    'API_SECRET': "",
-}
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': os.environ.get("CLOUD_NAME"),
+#     'API_KEY': os.environ.get("API_KEY"),
+#     'API_SECRET': os.environ.get("SECRET_KEY"),
+# }
+#
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
