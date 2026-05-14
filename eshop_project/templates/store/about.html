@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="about-hero text-center text-white d-flex align-items-center">
+    <div class="container">
+        <h1 class="display-3 fw-bold">About GS-Shop</h1>
+        <p class="lead mt-3">Your trusted destination for fashion, lifestyle, and premium shopping experiences.</p>
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="row align-items-center">
+        <div class="col-md-6 mb-4">
+            <img src="{% static 'images/about_us.jpg' %}" alt="About eShop" class="img-fluid rounded-4 shadow-lg">
+        </div>
+        <div class="col-md-6">
+            <h2 class="fw-bold text-warning mb-4">Who We Are</h2>
+            <p class="fs-5 text-white">
+                eShop is a modern online shopping platform designed to bring customers the latest trends in fashion,
+                electronics, and lifestyle products at unbeatable prices.
+            </p>
+            <p class="fs-5 text-white">
+                We focus on quality, affordability, and customer satisfaction while creating a premium shopping experience.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-warning">Why Choose Us?</h2>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 p-4 text-center">
+                <h4 class="fw-bold">Premium Quality</h4>
+                <p>We provide carefully selected products with top-notch quality standards.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 p-4 text-center">
+                <h4 class="fw-bold">Affordable Prices</h4>
+                <p>Best deals, discounts, and competitive pricing for every customer.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 p-4 text-center">
+                <h4 class="fw-bold">Fast Delivery</h4>
+                <p>Reliable shipping and secure packaging for a smooth shopping journey.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5 text-center">
+    <h2 class="fw-bold text-warning mb-4">Our Mission</h2>
+    <p class="fs-5 text-white mx-auto" style="max-width: 850px;">
+        Our mission is to redefine online shopping by offering stylish products, seamless user experience,
+        and trustworthy service that customers can rely on every day.
+    </p>
+</section>
+
+<section class="container py-5 text-center">
+    <h2 class="fw-bold text-warning mb-4">Contact Us</h2>
+    <p class="fs-5 text-white">Email: support@eshop.com</p>
+    <p class="fs-5 text-white">Phone: +91 7498000632</p>
+    <p class="fs-5 text-white">Location: At - Sulaj , Post - Palshi Supo Tq - Jalgaun Jamod Dist - Buldhana, Maharashtra, India</p>
+</section>
+
+{% endblock %}

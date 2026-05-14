@@ -1,0 +1,78 @@
+
+
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container py-5">
+
+    <h2 class="text-center text-white mb-5 fw-bold">
+        Our Products
+    </h2>
+
+    <div class="row g-4">
+
+        {% for product in products %}
+
+        <div class="col-lg-3 col-md-4 col-sm-6">
+
+            <div class="card product-card h-100 shadow-lg border-0 rounded-4 overflow-hidden">
+
+                <!-- PRODUCT IMAGE (CLICKABLE) -->
+                <a href="{% url 'product_detail' product.slug %}">
+                    <div class="product-img-wrapper">
+
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}"
+                                 class="card-img-top product-img"
+                                 alt="{{ product.name }}">
+                        {% endif %}
+
+                    </div>
+                </a>
+
+                <!-- PRODUCT DETAILS -->
+                <div class="card-body text-center d-flex flex-column">
+
+                    <h5 class="fw-bold mb-2">
+                        {{ product.name }}
+                    </h5>
+
+                    <div class="price-section mb-3">
+
+                        <span class="text-muted text-decoration-line-through me-2">
+                            ₹{{ product.price }}
+                        </span>
+
+                        <span class="fw-bold text-success fs-5">
+                            ₹{{ product.discounted_price }}
+                        </span>
+
+                    </div>
+
+                    <!-- VIEW BUTTON -->
+                    <a href="{% url 'product_detail' product.slug %}"
+                       class="btn btn-dark rounded-pill mt-auto px-4">
+
+                        View Product
+
+                    </a>
+
+                    <!-- WISHLIST BUTTON -->
+                    <a href="{% url 'add_to_wishlist' product.id %}"
+                       class="btn btn-outline-warning rounded-pill mt-2 px-4">
+                        ❤ Wishlist
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

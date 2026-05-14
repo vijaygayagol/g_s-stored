@@ -1,0 +1,165 @@
+
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">Checkout</h2>
+
+    <!-- =========================
+         STOCK ERROR MESSAGE
+    ========================= -->
+    {% if stock_error %}
+        <div class="alert alert-danger text-center fw-bold">
+            Some products are currently unavailable or have insufficient stock.
+            Please update your cart before proceeding.
+        </div>
+    {% endif %}
+
+    <!-- =========================
+         PRODUCT LIST
+    ========================= -->
+    {% for product in products %}
+
+    <div class="card p-3 mb-3 shadow rounded-4">
+
+        <div class="row align-items-center">
+
+            <!-- IMAGE -->
+            <div class="col-md-2 text-center">
+
+                {% if product.image %}
+                    <img src="{{ product.image.url }}"
+                         class="img-fluid rounded-3 shadow-sm"
+                         style="height:120px; object-fit:cover;">
+                {% endif %}
+
+            </div>
+
+            <!-- PRODUCT INFO -->
+            <div class="col-md-5">
+
+                <h5>{{ product.name }}</h5>
+
+                <p><b>Size:</b> {{ product.size }}</p>
+
+                <p><b>Quantity:</b> {{ product.qty }}</p>
+
+                <p><b>Available Stock:</b> {{ product.stock }}</p>
+
+                <!-- STOCK WARNING -->
+                {% if product.stock_error %}
+                    <p class="text-danger fw-bold">
+                        {{ product.stock_error }}
+                    </p>
+                {% endif %}
+
+            </div>
+
+            <!-- PRICE -->
+            <div class="col-md-3 text-end">
+
+                <h5 class="text-success">
+                    ₹{{ product.total_price|floatformat:2 }}
+                </h5>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+    <!-- =========================
+         TOTAL
+    ========================= -->
+    <div class="card p-4 shadow rounded-4 mt-4">
+
+        <h4>Total: ₹{{ total|floatformat:2 }}</h4>
+
+        {% if coupon_discount %}
+            <h5 class="text-danger">
+                Coupon Discount: -₹{{ coupon_discount|floatformat:2 }}
+            </h5>
+
+            <h3 class="text-success mt-3">
+                Final Total: ₹{{ final_total|floatformat:2 }}
+            </h3>
+        {% endif %}
+
+    </div>
+
+    <!-- =========================
+         SHIPPING FORM
+    ========================= -->
+    {% if not stock_error %}
+
+    <div class="card p-4 mt-4 shadow rounded-4">
+
+        <h4 class="mb-3">Shipping Details</h4>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <!-- PAYMENT OPTIONS -->
+            <div class="mb-4">
+
+                <label class="form-label fw-bold">
+                    Select Payment Method
+                </label>
+
+                <select name="payment_method"
+                        class="form-control"
+                        required>
+
+                    <option value="COD">
+                        Cash on Delivery
+                    </option>
+
+                    <option value="Razorpay">
+                        Pay Online (Razorpay)
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- PLACE ORDER BUTTON -->
+            <button type="submit"
+                    class="btn btn-success btn-lg w-100 mb-3">
+                Place Order
+            </button>
+
+        </form>
+
+        <!-- DIRECT ONLINE PAYMENT BUTTON -->
+        <a href="{% url 'payment' %}"
+           class="btn btn-primary btn-lg w-100">
+            Pay Online Now
+        </a>
+
+    </div>
+
+    {% else %}
+
+    <div class="text-center mt-4">
+
+        <a href="{% url 'cart' %}"
+           class="btn btn-warning btn-lg">
+            Return to Cart
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

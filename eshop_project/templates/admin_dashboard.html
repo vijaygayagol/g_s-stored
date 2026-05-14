@@ -1,0 +1,361 @@
+
+
+
+
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="text-warning fw-bold mb-4">
+        Admin Dashboard
+    </h2>
+
+    <!-- ADMIN QUICK ACTIONS -->
+    <div class="mb-4 d-flex flex-wrap gap-3">
+
+        <!-- ADD CATEGORY -->
+        <a href="/add-category/"
+           class="btn btn-warning btn-lg shadow rounded-4">
+            + Add Category
+        </a>
+
+        <!-- ADD PRODUCT -->
+        <a href="/add-product/"
+           class="btn btn-success btn-lg shadow rounded-4">
+            + Add Product
+        </a>
+
+        <!-- ADD COUPON -->
+        <a href="/admin/orders/coupon/add/"
+           class="btn btn-danger btn-lg shadow rounded-4">
+            + Add Coupon
+        </a>
+
+        <!-- MANAGE COUPONS -->
+        <a href="/admin/orders/coupon/"
+           class="btn btn-secondary btn-lg shadow rounded-4">
+            Manage Coupons
+        </a>
+
+        <!-- USER REVIEWS -->
+        <a href="/manage-reviews/"
+           class="btn btn-info btn-lg shadow rounded-4">
+            User Reviews
+        </a>
+
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="row mb-4">
+
+        <div class="col-md-2 mb-3">
+            <div class="card p-3 text-center shadow rounded-4">
+                <h5>Total Orders</h5>
+                <h3>{{ total_orders }}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-2 mb-3">
+            <div class="card p-3 text-center shadow rounded-4">
+                <h5>Pending</h5>
+                <h3>{{ pending_orders }}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-2 mb-3">
+            <div class="card p-3 text-center shadow rounded-4">
+                <h5>Processing</h5>
+                <h3>{{ processing_orders }}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-2 mb-3">
+            <div class="card p-3 text-center shadow rounded-4">
+                <h5>Shipped</h5>
+                <h3>{{ shipped_orders }}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-2 mb-3">
+            <div class="card p-3 text-center shadow rounded-4">
+                <h5>Delivered</h5>
+                <h3>{{ delivered_orders }}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-2 mb-3">
+            <div class="card p-3 text-center shadow rounded-4">
+                <h5>Revenue</h5>
+                <h3>₹{{ total_revenue }}</h3>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- PRODUCT MANAGEMENT -->
+    <div class="card p-4 shadow rounded-4 mb-4">
+
+        <h4 class="mb-4 text-warning">
+            Product Management
+        </h4>
+
+        <div class="table-responsive">
+
+            <table class="table table-dark table-hover align-middle">
+
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Discount</th>
+                        <th>Stock</th>
+                        <th>Sizes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for product in products %}
+
+                    <tr>
+
+                        <td>
+                            {% if product.image %}
+                            <img src="{{ product.image.url }}"
+                                 width="60"
+                                 height="60"
+                                 class="rounded">
+                            {% endif %}
+                        </td>
+
+                        <td>{{ product.name }}</td>
+
+                        <td>{{ product.category.name }}</td>
+
+                        <td>₹{{ product.price }}</td>
+
+                        <td>{{ product.discount_percentage }}%</td>
+
+                        <td>
+                            {% if product.stock < 5 %}
+                                <span class="text-danger fw-bold">
+                                    Low Stock ({{ product.stock }})
+                                </span>
+                            {% else %}
+                                {{ product.stock }}
+                            {% endif %}
+                        </td>
+
+                        <td>{{ product.sizes }}</td>
+
+                        <td>
+
+                            <a href="/edit-product/{{ product.id }}/"
+                               class="btn btn-sm btn-primary mb-1">
+                                Edit
+                            </a>
+
+                            <a href="/delete-product/{{ product.id }}/"
+                               class="btn btn-sm btn-danger mb-1"
+                               onclick="return confirm('Are you sure you want to delete this product?');">
+                                Delete
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="8" class="text-center">
+                            No Products Available
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- ORDER MANAGEMENT -->
+    <div class="card p-4 shadow rounded-4 mb-4">
+
+        <h4 class="mb-4 text-warning">
+            Manage Orders
+        </h4>
+
+        <div class="table-responsive">
+
+            <table class="table table-dark table-hover align-middle">
+
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>User</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Tracking</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for order in orders %}
+
+                    <tr>
+
+                        <td>#{{ order.id }}</td>
+
+                        <td>{{ order.user.username }}</td>
+
+                        <td>₹{{ order.total_amount }}</td>
+
+                        <td>{{ order.ordered_date|date:"d M Y" }}</td>
+
+                        <td>
+                            {% if order.status == "Pending" %}
+                                <span class="badge bg-warning text-dark">{{ order.status }}</span>
+                            {% elif order.status == "Processing" %}
+                                <span class="badge bg-info text-dark">{{ order.status }}</span>
+                            {% elif order.status == "Shipped" %}
+                                <span class="badge bg-primary">{{ order.status }}</span>
+                            {% elif order.status == "Delivered" %}
+                                <span class="badge bg-success">{{ order.status }}</span>
+                            {% else %}
+                                <span class="badge bg-danger">{{ order.status }}</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {{ order.tracking_number|default:"Not Assigned" }}
+                        </td>
+
+                        <td>
+
+                            <a href="/update-order-status/{{ order.id }}/Processing/"
+                               class="btn btn-sm btn-info mb-1">
+                                Processing
+                            </a>
+
+                            <a href="/update-order-status/{{ order.id }}/Shipped/"
+                               class="btn btn-sm btn-primary mb-1">
+                                Shipped
+                            </a>
+
+                            <a href="/update-order-status/{{ order.id }}/Delivered/"
+                               class="btn btn-sm btn-success mb-1">
+                                Delivered
+                            </a>
+
+                            <a href="/update-order-status/{{ order.id }}/Cancelled/"
+                               class="btn btn-sm btn-danger mb-1">
+                                Cancel
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="7" class="text-center">
+                            No Orders Found
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- USER REVIEW MANAGEMENT -->
+    <div class="card p-4 shadow rounded-4">
+
+        <h4 class="mb-4 text-warning">
+            Latest User Reviews
+        </h4>
+
+        <div class="table-responsive">
+
+            <table class="table table-dark table-hover align-middle">
+
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Product</th>
+                        <th>Rating</th>
+                        <th>Comment</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for review in reviews %}
+
+                    <tr>
+
+                        <td>{{ review.user.username }}</td>
+
+                        <td>{{ review.product.name }}</td>
+
+                        <td>⭐ {{ review.rating }}/5</td>
+
+                        <td>{{ review.comment|truncatechars:80 }}</td>
+
+                        <td>{{ review.created_at|date:"d M Y" }}</td>
+
+                        <td>
+
+                            <a href="/admin/store/productreview/{{ review.id }}/change/"
+                               class="btn btn-sm btn-primary">
+                                Edit
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            No User Reviews Found
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock content %}

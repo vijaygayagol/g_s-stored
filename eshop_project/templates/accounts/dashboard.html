@@ -1,0 +1,186 @@
+
+
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <!-- =========================
+         USER WELCOME SECTION
+    ========================= -->
+    <div class="card shadow-lg rounded-4 p-4 mb-4 dashboard-card">
+
+        <div class="row align-items-center">
+
+            <div class="col-md-8">
+                <h2 class="fw-bold text-warning">
+                    Welcome, {{ request.user.username }}
+                </h2>
+
+                <p class="text-light">
+                    Manage your orders, profile, and shopping activity here.
+                </p>
+            </div>
+
+            <div class="col-md-4 text-end">
+
+                <a href="{% url 'product_list' %}"
+                   class="btn btn-warning btn-lg">
+                    Continue Shopping
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+         SUMMARY CARDS
+    ========================= -->
+    <div class="row mb-4">
+
+        <!-- TOTAL ORDERS -->
+        <div class="col-md-4 mb-3">
+
+            <div class="card shadow rounded-4 p-4 text-center dashboard-card">
+
+                <h4>Total Orders</h4>
+
+                <h2 class="text-warning fw-bold">
+                    {{ total_orders }}
+                </h2>
+
+            </div>
+
+        </div>
+
+        <!-- PENDING -->
+        <div class="col-md-4 mb-3">
+
+            <div class="card shadow rounded-4 p-4 text-center dashboard-card">
+
+                <h4>Pending Orders</h4>
+
+                <h2 class="text-danger fw-bold">
+                    {{ pending_orders }}
+                </h2>
+
+            </div>
+
+        </div>
+
+        <!-- DELIVERED -->
+        <div class="col-md-4 mb-3">
+
+            <div class="card shadow rounded-4 p-4 text-center dashboard-card">
+
+                <h4>Delivered Orders</h4>
+
+                <h2 class="text-success fw-bold">
+                    {{ delivered_orders }}
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+         RECENT ORDERS
+    ========================= -->
+    <div class="card shadow rounded-4 p-4">
+
+        <h3 class="mb-4 text-warning">
+            My Orders
+        </h3>
+
+        {% if orders %}
+
+            <div class="table-responsive">
+
+                <table class="table table-dark table-hover align-middle">
+
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Total Amount</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for order in orders %}
+
+                        <tr>
+
+                            <td>#{{ order.id }}</td>
+
+                            <td>₹{{ order.total_amount }}</td>
+
+                            <td>{{ order.ordered_date|date:"d M Y" }}</td>
+
+                            <td>
+
+                                {% if order.status == 'Pending' %}
+                                    <span class="badge bg-warning text-dark">
+                                        Pending
+                                    </span>
+
+                                {% elif order.status == 'Processing' %}
+                                    <span class="badge bg-info">
+                                        Processing
+                                    </span>
+
+                                {% elif order.status == 'Shipped' %}
+                                    <span class="badge bg-primary">
+                                        Shipped
+                                    </span>
+
+                                {% elif order.status == 'Delivered' %}
+                                    <span class="badge bg-success">
+                                        Delivered
+                                    </span>
+
+                                {% elif order.status == 'Cancelled' %}
+                                    <span class="badge bg-danger">
+                                        Cancelled
+                                    </span>
+
+                                {% else %}
+                                    <span class="badge bg-secondary">
+                                        {{ order.status }}
+                                    </span>
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <div class="alert alert-info">
+                No orders yet.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

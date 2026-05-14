@@ -1,0 +1,198 @@
+
+
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+
+    <div class="container">
+
+        <!-- LOGO -->
+        <a class="navbar-brand fw-bold fs-3" href="/">
+            eShop
+        </a>
+
+        <!-- MOBILE TOGGLER -->
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <!-- NAVBAR CONTENT -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <!-- SEARCH -->
+            <form class="d-flex mx-auto w-50"
+                  action="{% url 'search' %}"
+                  method="GET">
+
+                <input class="form-control"
+                       type="search"
+                       name="q"
+                       placeholder="Search products...">
+
+                <button class="btn btn-warning ms-2">
+                    Search
+                </button>
+
+            </form>
+
+            <!-- NAV LINKS -->
+            <ul class="navbar-nav ms-auto align-items-center">
+
+                <!-- HOME -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
+                        Home
+                    </a>
+                </li>
+
+                <!-- SHOP -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'product_list' %}">
+                        Shop
+                    </a>
+                </li>
+
+                <!-- WISHLIST -->
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link position-relative"
+                       href="{% url 'wishlist' %}">
+                        ❤️ Wishlist
+                    </a>
+                </li>
+                {% endif %}
+
+                <!-- CART -->
+                <li class="nav-item">
+                    <a class="nav-link position-relative"
+                       href="{% url 'cart' %}">
+                        🛒 Cart
+
+                        {% if request.session.cart %}
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{ request.session.cart|length }}
+                        </span>
+                        {% endif %}
+                    </a>
+                </li>
+
+                <!-- ABOUT -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">
+                        About Us
+                    </a>
+                </li>
+
+                <!-- USER AUTH -->
+                {% if user.is_authenticated %}
+
+                    <!-- USER DROPDOWN -->
+                    <li class="nav-item dropdown">
+
+                        <a class="nav-link dropdown-toggle fw-semibold"
+                           href="#"
+                           role="button"
+                           data-bs-toggle="dropdown">
+
+                            👤 {{ user.username }}
+
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end shadow rounded-3">
+
+                            <!-- USER DASHBOARD -->
+                            <li>
+                                <a class="dropdown-item"
+                                   href="{% url 'dashboard' %}">
+                                    Dashboard
+                                </a>
+                            </li>
+
+                            <!-- MY ORDERS -->
+                            <li>
+                                <a class="dropdown-item"
+                                   href="{% url 'my_orders' %}">
+                                    My Orders
+                                </a>
+                            </li>
+
+                            <!-- WISHLIST -->
+                            <li>
+                                <a class="dropdown-item"
+                                   href="{% url 'wishlist' %}">
+                                    Wishlist
+                                </a>
+                            </li>
+
+                            <!-- ADMIN PANEL -->
+                            {% if request.user.is_staff %}
+                            <li><hr class="dropdown-divider"></li>
+
+                            <li>
+                                <a class="dropdown-item text-warning fw-bold"
+                                   href="{% url 'admin_dashboard' %}">
+                                    Admin Dashboard
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item"
+                                   href="{% url 'manage_reviews' %}">
+                                    Manage Reviews
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item"
+                                   href="/admin/">
+                                    Django Admin
+                                </a>
+                            </li>
+                            {% endif %}
+
+                            <!-- LOGOUT -->
+                            <li><hr class="dropdown-divider"></li>
+
+                            <li>
+                                <a class="dropdown-item text-danger"
+                                   href="{% url 'logout' %}">
+                                    Logout
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </li>
+
+                {% else %}
+
+                    <!-- LOGIN -->
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-outline-light rounded-pill px-4"
+                           href="{% url 'login' %}">
+                            Login
+                        </a>
+                    </li>
+
+                    <!-- REGISTER -->
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-warning rounded-pill px-4"
+                           href="{% url 'register' %}">
+                            Register
+                        </a>
+                    </li>
+
+                {% endif %}
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>

@@ -1,0 +1,30 @@
+
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-warning fw-bold mb-4">My Orders</h2>
+
+    {% for order in orders %}
+    <div class="card p-4 shadow rounded-4 mb-4">
+        <div class="d-flex justify-content-between">
+            <div>
+                <h5>Order #{{ order.id }}</h5>
+                <p>Total: ₹{{ order.total_amount }}</p>
+                <p>Date: {{ order.ordered_date|date:"d M Y" }}</p>
+            </div>
+            <div>
+                <span class="badge bg-primary p-2">{{ order.status }}</span>
+            </div>
+        </div>
+
+        <a href="{% url 'track_order' order.id %}"
+           class="btn btn-warning mt-3">
+           Track Order
+        </a>
+    </div>
+    {% empty %}
+        <p>No orders found.</p>
+    {% endfor %}
+</div>
+{% endblock %}

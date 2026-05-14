@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5 text-center">
+    <div class="card p-5 shadow rounded-4">
+        <h1 class="text-success">Order Placed Successfully!</h1>
+        <p>Thank you for shopping with us.</p>
+        <a href="{% url 'my_orders' %}" class="btn btn-dark">View Orders</a>
+    </div>
+</div>
+{% endblock %}

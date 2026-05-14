@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card p-5 shadow rounded-4">
+
+        <h2 class="text-warning mb-4">
+            Track Order #{{ order.id }}
+        </h2>
+
+        <p><b>Total Amount:</b> ₹{{ order.total_amount }}</p>
+        <p><b>Payment Method:</b> {{ order.payment_method }}</p>
+        <p><b>Order Date:</b> {{ order.ordered_date|date:"d M Y" }}</p>
+
+        <hr>
+
+        {% if order.status == 'Pending' %}
+            <div class="alert alert-warning">Order Pending</div>
+        {% elif order.status == 'Processing' %}
+            <div class="alert alert-info">Order Processing</div>
+        {% elif order.status == 'Shipped' %}
+            <div class="alert alert-primary">Order Shipped</div>
+        {% elif order.status == 'Delivered' %}
+            <div class="alert alert-success">Order Delivered</div>
+        {% elif order.status == 'Cancelled' %}
+            <div class="alert alert-danger">Order Cancelled</div>
+        {% endif %}
+
+        <div class="progress mt-4" style="height:30px;">
+            {% if order.status == 'Pending' %}
+                <div class="progress-bar bg-warning" style="width:20%">Pending</div>
+            {% elif order.status == 'Processing' %}
+                <div class="progress-bar bg-info" style="width:40%">Processing</div>
+            {% elif order.status == 'Shipped' %}
+                <div class="progress-bar bg-primary" style="width:75%">Shipped</div>
+            {% elif order.status == 'Delivered' %}
+                <div class="progress-bar bg-success" style="width:100%">Delivered</div>
+            {% elif order.status == 'Cancelled' %}
+                <div class="progress-bar bg-danger" style="width:100%">Cancelled</div>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,176 @@
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">My Cart</h2>
+
+    {% if not products %}
+        <div class="alert alert-warning">
+            Your cart is empty 🛒
+        </div>
+    {% endif %}
+
+    {% for product in products %}
+
+    <div class="card p-3 mb-3 shadow rounded-4">
+
+        <div class="row align-items-center">
+
+            <!-- PRODUCT IMAGE -->
+            <div class="col-md-2 text-center">
+
+                {% if product.image %}
+                    <img src="{{ product.image.url }}"
+                         alt="{{ product.name }}"
+                         class="img-fluid rounded-3 shadow-sm"
+                         style="height:120px; object-fit:cover;">
+                {% endif %}
+
+            </div>
+
+            <!-- PRODUCT INFO -->
+            <div class="col-md-4">
+
+                <h5>{{ product.name }}</h5>
+
+                <!-- SIZE -->
+                <p>
+                    <b>Size:</b> {{ product.size }}
+                </p>
+
+                <!-- QUANTITY -->
+                <p>
+                    <b>Quantity:</b> {{ product.qty }}
+                </p>
+
+                <!-- STOCK -->
+                <p>
+                    <b>Available Stock:</b> {{ product.stock }}
+                </p>
+
+            </div>
+
+            <!-- PRICE -->
+            <div class="col-md-3 text-end">
+
+                <h5 class="text-success">
+                    ₹{{ product.total_price|floatformat:2 }}
+                </h5>
+
+                <small>
+                    ₹{{ product.discounted_price }} each
+                </small>
+
+            </div>
+
+            <!-- ACTIONS -->
+            <div class="col-md-3 text-end">
+
+                <!-- INCREASE -->
+                <a href="{% url 'update_cart' product.id product.size 'increase' %}"
+                   class="btn btn-sm btn-success mb-1">
+                    +
+                </a>
+
+                <!-- DECREASE -->
+                <a href="{% url 'update_cart' product.id product.size 'decrease' %}"
+                   class="btn btn-sm btn-warning mb-1">
+                    -
+                </a>
+
+                <!-- REMOVE -->
+                <a href="{% url 'remove_from_cart' product.id product.size %}"
+                   class="btn btn-sm btn-danger">
+                    Remove
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+    <!-- ========================= -->
+    <!-- COUPON SECTION -->
+    <!-- ========================= -->
+    {% if products %}
+    <div class="card p-4 shadow rounded-4 mb-4">
+
+        <h4 class="mb-3 text-warning">
+            Apply Coupon
+        </h4>
+
+        <form method="POST" action="{% url 'apply_coupon' %}">
+            {% csrf_token %}
+
+            <div class="row">
+
+                <div class="col-md-8 mb-2">
+                    <input type="text"
+                           name="coupon_code"
+                           class="form-control"
+                           placeholder="Enter coupon code"
+                           required>
+                </div>
+
+                <div class="col-md-4 mb-2">
+                    <button type="submit"
+                            class="btn btn-warning w-100">
+                        Apply Coupon
+                    </button>
+                </div>
+
+            </div>
+        </form>
+
+        {% if coupon %}
+        <div class="alert alert-success mt-3 mb-0">
+            Coupon Applied:
+            <b>{{ coupon.code }}</b>
+            ({{ coupon.discount_percentage }}% OFF)
+        </div>
+        {% endif %}
+
+    </div>
+    {% endif %}
+
+    <!-- ========================= -->
+    <!-- TOTAL SECTION -->
+    <!-- ========================= -->
+    {% if products %}
+    <div class="mt-4 p-4 bg-light rounded-4 shadow-sm text-dark">
+
+        <h4>
+            Subtotal:
+            ₹{{ total|floatformat:2 }}
+        </h4>
+
+        {% if coupon_discount > 0 %}
+        <h5 class="text-danger">
+            Discount:
+            -₹{{ coupon_discount|floatformat:2 }}
+        </h5>
+        {% endif %}
+
+        <h3 class="text-success mt-3">
+            Final Total:
+            ₹{{ final_total|floatformat:2 }}
+        </h3>
+
+        <a href="{% url 'checkout' %}"
+           class="btn btn-success btn-lg mt-3">
+            Proceed to Checkout
+        </a>
+
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- =========================
+     HERO SECTION
+========================= -->
+
+<section class="hero-section text-center text-white d-flex align-items-center">
+
+    <div class="container">
+
+        <h1 class="display-4 fw-bold">
+            Welcome to eShop
+        </h1>
+
+        <p class="lead">
+            Best Deals Available Here
+        </p>
+
+        <a href="{% url 'product_list' %}"
+           class="btn btn-warning btn-lg">
+            Shop Now
+        </a>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     RUNNING OFFER BAR
+========================= -->
+
+<div class="offer-bar">
+
+    <marquee behavior="scroll"
+             direction="left"
+             scrollamount="8">
+
+        🔥 Flat 50% OFF on Shoes |
+        🚚 Free Delivery Above ₹999 |
+        🎉 New Summer Collection Available |
+        💥 Buy 2 Get 1 Free |
+        🛒 Cash On Delivery Available |
+        ⚡ Limited Time Mega Sale
+
+    </marquee>
+
+</div>
+
+<!-- =========================
+     CATEGORIES
+========================= -->
+
+<div class="container mt-5">
+
+    <h2 class="text-center text-white fw-bold mb-4">
+        Shop by Categories
+    </h2>
+
+    <div class="row">
+
+        {% for category in categories %}
+
+        <div class="col-md-3 mb-4">
+
+            <div class="card category-card shadow rounded-4 h-100">
+
+                {% if category.image %}
+
+                    <img src="{{ category.image.url }}"
+                         class="card-img-top"
+                         height="220"
+                         alt="{{ category.name }}">
+
+                {% else %}
+
+                    <img src="{% static 'images/default-category.jpg' %}"
+                         class="card-img-top"
+                         height="220"
+                         alt="{{ category.name }}">
+
+                {% endif %}
+
+                <div class="card-body text-center">
+
+                    <h5>{{ category.name }}</h5>
+
+                    <a href="{% url 'category_products' category.slug %}"
+                       class="btn btn-warning">
+                        Explore
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<!-- =========================
+     FEATURED PRODUCTS
+========================= -->
+
+<div class="container mt-5">
+
+    <h2 class="text-white fw-bold text-center mb-4">
+        Featured Products
+    </h2>
+
+    <div class="row">
+
+        {% for product in products %}
+
+        <div class="col-md-3 mb-4">
+
+            <div class="card product-card shadow rounded-4 h-100">
+
+                {% if product.image %}
+
+                    <img src="{{ product.image.url }}"
+                         class="card-img-top"
+                         height="250"
+                         alt="{{ product.name }}">
+
+                {% else %}
+
+                    <img src="{% static 'images/default-product.jpg' %}"
+                         class="card-img-top"
+                         height="250"
+                         alt="{{ product.name }}">
+
+                {% endif %}
+
+                <div class="card-body text-center">
+
+                    <h5>{{ product.name }}</h5>
+
+                    <p>
+
+                        <del>
+                            ₹{{ product.price }}
+                        </del>
+
+                        <strong class="text-success">
+                            ₹{{ product.discounted_price }}
+                        </strong>
+
+                    </p>
+
+                    <a href="{% url 'product_detail' product.slug %}"
+                       class="btn btn-dark">
+                        View
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
