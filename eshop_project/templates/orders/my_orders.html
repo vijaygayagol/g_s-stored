@@ -1,30 +1,153 @@
-
-
 {% extends 'base.html' %}
 {% block content %}
+
 <div class="container mt-5">
-    <h2 class="text-warning fw-bold mb-4">My Orders</h2>
+
+    <h2 class="text-warning fw-bold mb-4">
+        My Orders
+    </h2>
 
     {% for order in orders %}
-    <div class="card p-4 shadow rounded-4 mb-4">
-        <div class="d-flex justify-content-between">
+
+    <div class="card p-4 shadow rounded-4 mb-5">
+
+        <!-- ORDER HEADER -->
+        <div class="d-flex justify-content-between flex-wrap mb-4">
+
             <div>
                 <h5>Order #{{ order.id }}</h5>
-                <p>Total: ₹{{ order.total_amount }}</p>
-                <p>Date: {{ order.ordered_date|date:"d M Y" }}</p>
+                <p><b>Total:</b> ₹{{ order.total_amount }}</p>
+                <p><b>Date:</b> {{ order.ordered_date|date:"d M Y" }}</p>
             </div>
+
             <div>
-                <span class="badge bg-primary p-2">{{ order.status }}</span>
+                <span class="badge bg-primary p-2">
+                    {{ order.status }}
+                </span>
             </div>
+
         </div>
 
+        <!-- TRACK BUTTON -->
         <a href="{% url 'track_order' order.id %}"
-           class="btn btn-warning mt-3">
+           class="btn btn-warning mb-4">
            Track Order
         </a>
+
+        <!-- ORDER ITEMS -->
+        <h4 class="mb-3 text-warning">
+            Ordered Products
+        </h4>
+
+        {% for item in order.items.all %}
+
+        <div class="card p-3 mb-4 border rounded-4">
+
+            <div class="row align-items-center">
+
+                <!-- PRODUCT IMAGE -->
+                <div class="col-md-2 text-center">
+
+                    {% if item.product.image %}
+                        <img src="{{ item.product.image.url }}"
+                             class="img-fluid rounded-3 shadow-sm"
+                             style="height:100px; object-fit:cover;">
+                    {% endif %}
+
+                </div>
+
+                <!-- PRODUCT DETAILS -->
+                <div class="col-md-4">
+
+                    <h5>{{ item.product.name }}</h5>
+
+                    <p><b>Price:</b> ₹{{ item.price }}</p>
+
+                    <p><b>Quantity:</b> {{ item.quantity }}</p>
+
+                </div>
+
+                <!-- REVIEW SECTION -->
+                <div class="col-md-6">
+
+                    {% if order.status == "Delivered" %}
+
+                        <div class="card p-3 bg-light rounded-4">
+
+                            <h6 class="text-warning mb-3">
+                                Add Your Review
+                            </h6>
+
+                            <form method="POST"
+                                  action="{% url 'add_review' item.product.id %}">
+
+                                {% csrf_token %}
+
+                                <div class="mb-2">
+
+                                    <label class="form-label">Rating</label>
+
+                                    <select name="rating"
+                                            class="form-control"
+                                            required>
+
+                                        <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                                        <option value="4">⭐⭐⭐⭐ (4)</option>
+                                        <option value="3">⭐⭐⭐ (3)</option>
+                                        <option value="2">⭐⭐ (2)</option>
+                                        <option value="1">⭐ (1)</option>
+
+                                    </select>
+
+                                </div>
+
+                                <div class="mb-2">
+
+                                    <label class="form-label">Comment</label>
+
+                                    <textarea name="comment"
+                                              rows="3"
+                                              class="form-control"
+                                              placeholder="Write your review..."
+                                              required></textarea>
+
+                                </div>
+
+                                <button type="submit"
+                                        class="btn btn-success btn-sm">
+                                    Submit Review
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    {% else %}
+
+                        <p class="text-muted mb-0">
+                            Review available after delivery
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
     </div>
+
     {% empty %}
-        <p>No orders found.</p>
+
+    <div class="alert alert-info">
+        No orders found.
+    </div>
+
     {% endfor %}
+
 </div>
+
 {% endblock %}

@@ -1,3 +1,6 @@
+
+
+
 {% extends 'base.html' %}
 {% block content %}
 
@@ -34,30 +37,30 @@
 
     </div>
 
-    <!-- ========================= -->
-    <!-- CUSTOMER REVIEWS SECTION -->
-    <!-- ========================= -->
-
+    <!-- CUSTOMER REVIEWS -->
     <div class="mt-5">
 
-        {% if reviews %}
-            <h3 class="text-warning mb-4">Customer Reviews</h3>
-        {% else %}
-            <h3 class="text-warning mb-4">Customer Reviews</h3>
-        {% endif %}
+        <h3 class="text-warning mb-4">
+            Customer Reviews
+        </h3>
 
         <!-- REVIEW FORM -->
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated and can_review %}
 
         <div class="card p-4 shadow rounded-4 mb-4">
 
-            <h5 class="mb-3">Add Your Review</h5>
+            <h5 class="mb-3">
+                Add Your Review
+            </h5>
 
             <form method="POST" action="{% url 'add_review' product.id %}">
                 {% csrf_token %}
 
                 <div class="mb-3">
-                    <label class="form-label">Rating</label>
+
+                    <label class="form-label">
+                        Rating
+                    </label>
 
                     <select name="rating" class="form-control" required>
                         <option value="5">⭐⭐⭐⭐⭐ (5)</option>
@@ -70,21 +73,32 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Comment</label>
+
+                    <label class="form-label">
+                        Comment
+                    </label>
 
                     <textarea name="comment"
                               rows="4"
                               class="form-control"
                               placeholder="Write your review..."
                               required></textarea>
+
                 </div>
 
-                <button type="submit" class="btn btn-warning">
+                <button type="submit"
+                        class="btn btn-warning">
                     Submit Review
                 </button>
 
             </form>
 
+        </div>
+
+        {% elif user.is_authenticated %}
+
+        <div class="alert alert-info">
+            You can review this product only after purchasing and receiving it.
         </div>
 
         {% else %}
@@ -95,7 +109,7 @@
 
         {% endif %}
 
-        <!-- ALL REVIEWS -->
+        <!-- ALL USER REVIEWS -->
         {% for review in reviews %}
 
         <div class="card p-3 mb-3 shadow rounded-4">
@@ -112,7 +126,7 @@
 
             </div>
 
-            <p>
+            <p class="mb-2">
                 {% for i in "12345" %}
                     {% if forloop.counter <= review.rating %}
                         ⭐
@@ -120,14 +134,16 @@
                 {% endfor %}
             </p>
 
-            <p>{{ review.comment }}</p>
+            <p>
+                {{ review.comment }}
+            </p>
 
         </div>
 
         {% empty %}
 
         <div class="alert alert-secondary">
-            No reviews yet. Be the first to review!
+            No reviews yet. Be the first verified buyer to review!
         </div>
 
         {% endfor %}
