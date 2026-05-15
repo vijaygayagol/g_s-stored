@@ -161,7 +161,13 @@ class Category(models.Model):
     #     blank=True,
     #     null=True
     # )
-    image = CloudinaryField('image', blank=True, null=True)
+    # image = CloudinaryField('image', blank=True, null=True)
+    image = CloudinaryField(
+        'image',
+        folder='categories',
+        blank=True,
+        null=True
+    )
 
     def __str__(self):
         return self.name
@@ -220,7 +226,7 @@ class Product(models.Model):
     # image = models.ImageField(
     #     upload_to='products/'
     # )
-    image = CloudinaryField('image')
+    image = CloudinaryField('image', folder='products')
 
     available = models.BooleanField(
         default=True
