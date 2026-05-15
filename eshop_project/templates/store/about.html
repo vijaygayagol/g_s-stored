@@ -1,3 +1,5 @@
+
+
 {% extends 'base.html' %}
 {% load static %}
 
@@ -6,21 +8,29 @@
 <section class="about-hero text-center text-white d-flex align-items-center">
     <div class="container">
         <h1 class="display-3 fw-bold">About GS-Shop</h1>
-        <p class="lead mt-3">Your trusted destination for fashion, lifestyle, and premium shopping experiences.</p>
+        <p class="lead mt-3">
+            Your trusted destination for fashion, lifestyle, and premium shopping experiences.
+        </p>
     </div>
 </section>
 
+<!-- WHO WE ARE -->
 <section class="container py-5">
     <div class="row align-items-center">
         <div class="col-md-6 mb-4">
-            <img src="{% static 'images/about_us.jpg' %}" alt="About eShop" class="img-fluid rounded-4 shadow-lg">
+            <img src="{% static 'images/about_us.jpg' %}"
+                 alt="About eShop"
+                 class="img-fluid rounded-4 shadow-lg">
         </div>
+
         <div class="col-md-6">
             <h2 class="fw-bold text-warning mb-4">Who We Are</h2>
+
             <p class="fs-5 text-white">
-                eShop is a modern online shopping platform designed to bring customers the latest trends in fashion,
-                electronics, and lifestyle products at unbeatable prices.
+                eShop is a modern online shopping platform designed to bring customers
+                the latest trends in fashion, electronics, and lifestyle products at unbeatable prices.
             </p>
+
             <p class="fs-5 text-white">
                 We focus on quality, affordability, and customer satisfaction while creating a premium shopping experience.
             </p>
@@ -28,12 +38,42 @@
     </div>
 </section>
 
+<!-- FOUNDER SECTION -->
+<section class="container py-5 text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card p-4 shadow-lg border-0 bg-dark text-white">
+
+                <img src="{% static 'images/vijay.jpeg' %}"
+                     alt="Vijay Gopal Gayagol"
+                     class="rounded-circle mx-auto mb-3"
+                     width="150"
+                     height="150"
+                     style="object-fit: cover;">
+
+                <h3 class="fw-bold text-warning">Vijay Gopal Gayagol</h3>
+                <p class="mb-2">Founder & Full Stack Developer</p>
+
+                <p>
+                    Passionate developer behind GS-Shop, focused on building scalable,
+                    secure, and user-friendly e-commerce platforms.
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- WHY CHOOSE US -->
 <section class="container py-5">
     <div class="text-center mb-5">
         <h2 class="fw-bold text-warning">Why Choose Us?</h2>
     </div>
 
     <div class="row g-4">
+
         <div class="col-md-4">
             <div class="card h-100 p-4 text-center">
                 <h4 class="fw-bold">Premium Quality</h4>
@@ -54,22 +94,29 @@
                 <p>Reliable shipping and secure packaging for a smooth shopping journey.</p>
             </div>
         </div>
+
     </div>
 </section>
 
+<!-- MISSION -->
 <section class="container py-5 text-center">
     <h2 class="fw-bold text-warning mb-4">Our Mission</h2>
+
     <p class="fs-5 text-white mx-auto" style="max-width: 850px;">
-        Our mission is to redefine online shopping by offering stylish products, seamless user experience,
-        and trustworthy service that customers can rely on every day.
+        Our mission is to redefine online shopping by offering stylish products,
+        seamless user experience, and trustworthy service that customers can rely on every day.
     </p>
 </section>
 
+<!-- CONTACT -->
 <section class="container py-5 text-center">
     <h2 class="fw-bold text-warning mb-4">Contact Us</h2>
+
     <p class="fs-5 text-white">Email: support@eshop.com</p>
     <p class="fs-5 text-white">Phone: +91 7498000632</p>
-    <p class="fs-5 text-white">Location: At - Sulaj , Post - Palshi Supo Tq - Jalgaun Jamod Dist - Buldhana, Maharashtra, India</p>
+    <p class="fs-5 text-white">
+        Location: At - Sulaj, Post - Palshi Supo, Tq - Jalgaon Jamod, Dist - Buldhana, Maharashtra, India
+    </p>
 </section>
 
 {% endblock %}
