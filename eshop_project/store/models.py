@@ -142,7 +142,7 @@
 
 from django.db import models
 from django.contrib.auth.models import User
-
+from cloudinary.models import CloudinaryField
 # =========================
 # CATEGORY MODEL
 # =========================
@@ -156,11 +156,12 @@ class Category(models.Model):
         unique=True
     )
 
-    image = models.ImageField(
-        upload_to='categories/',
-        blank=True,
-        null=True
-    )
+    # image = models.ImageField(
+    #     upload_to='categories/',
+    #     blank=True,
+    #     null=True
+    # )
+    image = CloudinaryField('image', blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -216,9 +217,10 @@ class Product(models.Model):
         help_text="Example: S,M,L,XL"
     )
 
-    image = models.ImageField(
-        upload_to='products/'
-    )
+    # image = models.ImageField(
+    #     upload_to='products/'
+    # )
+    image = CloudinaryField('image')
 
     available = models.BooleanField(
         default=True
