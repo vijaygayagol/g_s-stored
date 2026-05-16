@@ -1,9 +1,21 @@
 
 
+
+
+
+
 {% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
+
+<!-- =========================
+     LOADER (SPINNER)
+========================= -->
+
+<div id="page-loader">
+    <div class="spinner"></div>
+</div>
 
 <!-- =========================
      HERO SECTION
@@ -30,25 +42,16 @@
 
 </section>
 
-<!-- =========================
-     RUNNING OFFER BAR
-========================= -->
-
+<!-- OFFER BAR -->
 <div class="offer-bar">
-
-    <marquee behavior="scroll"
-             direction="left"
-             scrollamount="8">
-
+    <marquee behavior="scroll" direction="left" scrollamount="8">
         🔥 Flat 50% OFF on Shoes |
         🚚 Free Delivery Above ₹999 |
         🎉 New Summer Collection Available |
         💥 Buy 2 Get 1 Free |
         🛒 Cash On Delivery Available |
         ⚡ Limited Time Mega Sale
-
     </marquee>
-
 </div>
 
 <!-- =========================
@@ -90,7 +93,7 @@
                     <h5>{{ category.name }}</h5>
 
                     <a href="{% url 'category_products' category.slug %}"
-                       class="btn btn-warning btn-sm px-3 py-1 rounded-pill">
+                       class="btn btn-warning btn-sm px-3 py-1 rounded-pill link-btn">
                         Explore
                     </a>
 
@@ -145,16 +148,14 @@
                     <h5>{{ product.name }}</h5>
 
                     <p>
-
                         <del>₹{{ product.price }}</del>
                         <strong class="text-success">
                             ₹{{ product.discounted_price }}
                         </strong>
-
                     </p>
 
                     <a href="{% url 'product_detail' product.slug %}"
-                       class="btn btn-dark btn-sm px-3 py-1 rounded-pill">
+                       class="btn btn-dark btn-sm px-3 py-1 rounded-pill link-btn">
                         View
                     </a>
 
@@ -169,5 +170,22 @@
     </div>
 
 </div>
+
+<!-- =========================
+     LOADER SCRIPT
+========================= -->
+
+<script>
+    window.addEventListener("load", function () {
+        document.getElementById("page-loader").style.display = "none";
+    });
+
+    // optional: show loader on link click
+    document.querySelectorAll(".link-btn").forEach(btn => {
+        btn.addEventListener("click", function () {
+            document.getElementById("page-loader").style.display = "flex";
+        });
+    });
+</script>
 
 {% endblock %}
