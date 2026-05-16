@@ -2,13 +2,14 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
+    scroll-behavior: smooth;
 }
 
 body {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
     background: linear-gradient(
-                    rgba(0,0,0,0.45),
-                    rgba(0,0,0,0.45)
+                    rgba(0,0,0,0.50),
+                    rgba(0,0,0,0.60)
                 ),
                 url("/static/images/bg.jpg") no-repeat center center fixed;
     background-size: cover;
@@ -20,16 +21,15 @@ body {
 }
 
 /* =========================
-   PAGE LOADER (FIXED + SAFE)
+   PAGE LOADER
 ========================= */
-
 #page-loader {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.75);
+    background: rgba(0,0,0,0.80);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,21 +37,20 @@ body {
     transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
-/* hidden state (IMPORTANT FIX) */
 #page-loader.hide {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 }
 
-/* spinner */
 .spinner {
-    width: 65px;
-    height: 65px;
-    border: 6px solid rgba(255, 255, 255, 0.3);
+    width: 70px;
+    height: 70px;
+    border: 6px solid rgba(255,255,255,0.25);
     border-top: 6px solid #ffc107;
     border-radius: 50%;
     animation: spin 1s linear infinite;
+    box-shadow: 0 0 25px rgba(255,193,7,0.5);
 }
 
 @keyframes spin {
@@ -60,7 +59,7 @@ body {
 }
 
 /* =========================
-   WRAPPER
+   SITE WRAPPER
 ========================= */
 .site-wrapper {
     min-height: 100vh;
@@ -74,52 +73,82 @@ main {
 
 a {
     text-decoration: none;
+    transition: 0.3s ease;
 }
 
 /* =========================
    NAVBAR
 ========================= */
 .navbar {
-    background: rgba(0, 0, 0, 0.82) !important;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    background: rgba(0,0,0,0.88) !important;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 5px 18px rgba(0,0,0,0.35);
+    padding: 12px 0;
 }
 
 .navbar-brand {
-    font-size: 28px;
+    font-size: 30px;
     letter-spacing: 1px;
     color: #ffc107 !important;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .navbar .nav-link {
     color: white !important;
     font-weight: 500;
-    transition: 0.3s;
+    margin: 0 8px;
+    position: relative;
 }
 
 .navbar .nav-link:hover {
     color: #ffc107 !important;
 }
 
+.navbar .nav-link::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    left: 0;
+    bottom: -4px;
+    background: #ffc107;
+    transition: 0.3s;
+}
+
+.navbar .nav-link:hover::after {
+    width: 100%;
+}
+
 .navbar .form-control {
     min-width: 250px;
     border-radius: 30px;
+    border: none;
+    padding: 10px 15px;
 }
 
 .navbar .dropdown-menu {
     border: none;
-    border-radius: 12px;
+    border-radius: 14px;
+    background: rgba(0,0,0,0.92);
+}
+
+.navbar .dropdown-item {
+    color: white;
+}
+
+.navbar .dropdown-item:hover {
+    background: #ffc107;
+    color: black;
 }
 
 /* =========================
    HERO SECTION
 ========================= */
 .hero-section {
-    min-height: 70vh;
+    min-height: 75vh;
     background: linear-gradient(
-                    rgba(0,0,0,0.55),
-                    rgba(0,0,0,0.55)
+                    rgba(0,0,0,0.60),
+                    rgba(0,0,0,0.65)
                 ),
                 url("/static/images/about_us.jpg") no-repeat center center;
     background-size: cover;
@@ -127,32 +156,75 @@ a {
     align-items: center;
     justify-content: center;
     text-align: center;
+    padding: 40px 20px;
 }
 
 .hero-section h1,
 .hero-section p {
-    text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+    text-shadow: 2px 2px 12px rgba(0,0,0,0.8);
+}
+
+.hero-section h1 {
+    font-size: 4rem;
+    font-weight: 700;
+}
+
+.hero-section p {
+    font-size: 1.4rem;
 }
 
 .hero-section .btn {
-    font-size: 14px;
-    padding: 8px 18px;
+    font-size: 15px;
+    padding: 10px 24px;
+}
+
+/* =========================
+   SECTION HEADINGS
+========================= */
+h2 {
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.6);
+    letter-spacing: 1px;
 }
 
 /* =========================
    BUTTONS
 ========================= */
 .btn {
-    transition: 0.3s ease;
+    transition: all 0.3s ease;
     border-radius: 30px;
     font-weight: 600;
-    font-size: 13px;
-    padding: 6px 14px;
+    font-size: 14px;
+    padding: 8px 18px;
 }
 
 .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 12px rgba(0,0,0,0.25);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+/* =========================
+   OFFER BAR
+========================= */
+.offer-bar {
+    width: 100%;
+    background: linear-gradient(to right, #ff9800, #ff5722);
+    color: white;
+    padding: 12px 0;
+    font-size: 15px;
+    font-weight: bold;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    border-top: 1px solid rgba(255,255,255,0.15);
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.offer-bar marquee {
+    letter-spacing: 1px;
+}
+
+.offer-bar:hover {
+    background: linear-gradient(to right, #ff5722, #ff9800);
 }
 
 /* =========================
@@ -161,45 +233,57 @@ a {
 .card {
     border: none;
     overflow: hidden;
-    border-radius: 20px;
-    backdrop-filter: blur(12px);
-    background: rgba(255,255,255,0.12);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    border-radius: 22px;
+    backdrop-filter: blur(14px);
+    background: rgba(255,255,255,0.10);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.30);
     color: white;
-    transition: 0.3s ease;
+    transition: all 0.4s ease;
 }
 
 .card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-10px);
+    box-shadow: 0 18px 40px rgba(255,193,7,0.20);
+}
+
+.card img {
+    transition: transform 0.4s ease;
+}
+
+.card:hover img {
+    transform: scale(1.05);
 }
 
 /* PRODUCT CARD */
 .product-card img {
     object-fit: cover;
     width: 100%;
-    height: 250px;
+    height: 260px;
 }
 
 .product-card .card-body {
     color: white;
+    padding: 20px;
 }
 
 .product-card h5 {
     font-weight: bold;
-    font-size: 15px;
+    font-size: 17px;
 }
 
 .product-card del {
     color: #ffc107;
+    font-size: 14px;
 }
 
 .product-card strong {
     color: #28a745;
+    font-size: 18px;
 }
 
 /* CATEGORY CARD */
 .category-card img {
-    height: 220px;
+    height: 230px;
     object-fit: cover;
     width: 100%;
 }
@@ -207,7 +291,7 @@ a {
 .category-card h5 {
     font-weight: bold;
     color: white;
-    font-size: 15px;
+    font-size: 17px;
 }
 
 /* =========================
@@ -224,8 +308,8 @@ a {
 .register-card {
     width: 100%;
     max-width: 500px;
-    background: rgba(0,0,0,0.72);
-    backdrop-filter: blur(14px);
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(15px);
     color: white;
     border-radius: 25px;
     padding: 45px;
@@ -235,29 +319,45 @@ a {
 }
 
 /* =========================
-   OFFER BAR
+   PREMIUM FOOTER
 ========================= */
-.offer-bar {
-    width: 100%;
-    background: linear-gradient(to right, #ff9800, #ff5722);
+.premium-footer {
+    background: rgba(0,0,0,0.88);
+    backdrop-filter: blur(12px);
     color: white;
-    padding: 10px 0;
-    font-size: 14px;
-    font-weight: bold;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-    border-top: 2px solid rgba(255,255,255,0.2);
-    border-bottom: 2px solid rgba(255,255,255,0.2);
+    border-top: 1px solid rgba(255,255,255,0.08);
 }
 
-.offer-bar marquee {
-    letter-spacing: 1px;
+.footer-links li {
+    margin-bottom: 10px;
 }
 
-.offer-bar:hover {
-    background: linear-gradient(to right, #ff5722, #ff9800);
-    transition: 0.4s ease;
+.footer-links a {
+    color: #ddd;
+    transition: 0.3s ease;
+    font-size: 15px;
+}
+
+.footer-links a:hover {
+    color: #ffc107;
+    padding-left: 6px;
+}
+
+.footer-desc {
+    font-size: 15px;
+    color: #ddd;
+}
+
+.social-icons a {
+    color: white;
+    margin: 0 10px;
+    font-size: 22px;
+    transition: 0.3s;
+}
+
+.social-icons a:hover {
+    color: #ffc107;
+    transform: translateY(-3px);
 }
 
 /* =========================
@@ -265,7 +365,7 @@ a {
 ========================= */
 @keyframes popIn {
     from {
-        transform: scale(0.8);
+        transform: scale(0.85);
         opacity: 0;
     }
     to {
@@ -275,17 +375,43 @@ a {
 }
 
 /* =========================
+   SCROLLBAR
+========================= */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ffc107;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.08);
+}
+
+/* =========================
    MOBILE RESPONSIVE
 ========================= */
+@media (max-width: 992px) {
+    .hero-section h1 {
+        font-size: 3rem;
+    }
+}
+
 @media (max-width: 768px) {
 
     .hero-section {
-        min-height: 50vh;
+        min-height: 55vh;
         padding: 20px;
     }
 
     .hero-section h1 {
-        font-size: 2rem;
+        font-size: 2.3rem;
+    }
+
+    .hero-section p {
+        font-size: 1rem;
     }
 
     .navbar .form-control {
@@ -308,5 +434,13 @@ a {
     .product-card img,
     .category-card img {
         height: 200px;
+    }
+
+    .premium-footer {
+        text-align: center;
+    }
+
+    .social-icons {
+        margin-top: 20px;
     }
 }

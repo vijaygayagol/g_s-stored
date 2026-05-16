@@ -1,3 +1,6 @@
+
+
+
 {% extends 'base.html' %}
 {% load static %}
 
@@ -6,9 +9,7 @@
 <!-- =========================
      HERO SECTION
 ========================= -->
-
 <section class="hero-section text-center text-white d-flex align-items-center">
-
     <div class="container">
 
         <h1 class="display-4 fw-bold">
@@ -25,10 +26,11 @@
         </a>
 
     </div>
-
 </section>
 
-<!-- OFFER BAR -->
+<!-- =========================
+     OFFER BAR
+========================= -->
 <div class="offer-bar">
     <marquee behavior="scroll" direction="left" scrollamount="8">
         🔥 Flat 50% OFF on Shoes |
@@ -41,9 +43,8 @@
 </div>
 
 <!-- =========================
-     CATEGORIES
+     CATEGORIES SECTION
 ========================= -->
-
 <div class="container mt-5">
 
     <h2 class="text-center text-white fw-bold mb-4">
@@ -54,24 +55,14 @@
 
         {% for category in categories %}
 
-        <div class="col-md-3 mb-4">
+        <div class="col-lg-3 col-md-6 mb-4">
 
             <div class="card category-card shadow rounded-4 h-100">
 
                 {% if category.image %}
-
                     <img src="{{ category.image.url }}"
                          class="card-img-top"
-                         height="220"
                          alt="{{ category.name }}">
-
-                {% else %}
-
-                    <img src="{% static 'images/default-category.jpg' %}"
-                         class="card-img-top"
-                         height="220"
-                         alt="{{ category.name }}">
-
                 {% endif %}
 
                 <div class="card-body text-center">
@@ -96,9 +87,8 @@
 </div>
 
 <!-- =========================
-     FEATURED PRODUCTS
+     FEATURED PRODUCTS SECTION
 ========================= -->
-
 <div class="container mt-5">
 
     <h2 class="text-white fw-bold text-center mb-4">
@@ -109,24 +99,14 @@
 
         {% for product in products %}
 
-        <div class="col-md-3 mb-4">
+        <div class="col-lg-3 col-md-6 mb-4">
 
             <div class="card product-card shadow rounded-4 h-100">
 
                 {% if product.image %}
-
                     <img src="{{ product.image.url }}"
                          class="card-img-top"
-                         height="250"
                          alt="{{ product.name }}">
-
-                {% else %}
-
-                    <img src="{% static 'images/default-product.jpg' %}"
-                         class="card-img-top"
-                         height="250"
-                         alt="{{ product.name }}">
-
                 {% endif %}
 
                 <div class="card-body text-center">
@@ -158,13 +138,12 @@
 </div>
 
 <!-- =========================
-     SAFE LOADER SCRIPT (FIXED)
+     SAFE LOADER SCRIPT
 ========================= -->
-
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-    // Page fully loaded → hide loader safely
+    // Hide loader after page load
     window.addEventListener("load", function () {
         const loader = document.getElementById("page-loader");
 
@@ -175,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Show loader only on internal navigation links
+    // Show loader on navigation
     document.querySelectorAll(".link-btn").forEach(btn => {
         btn.addEventListener("click", function () {
 
