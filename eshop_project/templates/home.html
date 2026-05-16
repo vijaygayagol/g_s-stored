@@ -1,21 +1,7 @@
-
-
-
-
-
-
 {% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
-
-<!-- =========================
-     LOADER (SPINNER)
-========================= -->
-
-<div id="page-loader">
-    <div class="spinner"></div>
-</div>
 
 <!-- =========================
      HERO SECTION
@@ -34,7 +20,7 @@
         </p>
 
         <a href="{% url 'product_list' %}"
-           class="btn btn-warning btn-sm px-3 py-2 rounded-pill">
+           class="btn btn-warning btn-sm px-3 py-2 rounded-pill link-btn">
             Shop Now
         </a>
 
@@ -172,20 +158,37 @@
 </div>
 
 <!-- =========================
-     LOADER SCRIPT
+     SAFE LOADER SCRIPT (FIXED)
 ========================= -->
 
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Page fully loaded → hide loader safely
     window.addEventListener("load", function () {
-        document.getElementById("page-loader").style.display = "none";
+        const loader = document.getElementById("page-loader");
+
+        if (loader) {
+            setTimeout(() => {
+                loader.style.display = "none";
+            }, 300);
+        }
     });
 
-    // optional: show loader on link click
+    // Show loader only on internal navigation links
     document.querySelectorAll(".link-btn").forEach(btn => {
         btn.addEventListener("click", function () {
-            document.getElementById("page-loader").style.display = "flex";
+
+            const loader = document.getElementById("page-loader");
+
+            if (loader) {
+                loader.style.display = "flex";
+            }
+
         });
     });
+
+});
 </script>
 
 {% endblock %}

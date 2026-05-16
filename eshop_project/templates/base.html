@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 {% load static %}
 
@@ -28,7 +27,7 @@
 <body>
 
     <!-- =========================
-         PAGE LOADER (NEW)
+         PAGE LOADER
     ========================= -->
     <div id="page-loader">
         <div class="spinner"></div>
@@ -44,7 +43,6 @@
         <div class="container mt-3">
 
             {% if messages %}
-
                 {% for message in messages %}
 
                     <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow"
@@ -60,7 +58,6 @@
                     </div>
 
                 {% endfor %}
-
             {% endif %}
 
         </div>
@@ -91,13 +88,12 @@
                         <h5 class="text-warning">Quick Links</h5>
 
                         <ul class="list-unstyled">
-
                             <li><a href="/">Home</a></li>
                             <li><a href="{% url 'product_list' %}">Shop</a></li>
                             <li><a href="{% url 'cart' %}">Cart</a></li>
                             <li><a href="{% url 'about' %}">About Us</a></li>
-
                         </ul>
+
                     </div>
 
                     <!-- ADMIN -->
@@ -107,11 +103,9 @@
                         <h5 class="text-warning">Admin Panel</h5>
 
                         <ul class="list-unstyled">
-
                             <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
                             <li><a href="{% url 'add_category' %}">Add Category</a></li>
                             <li><a href="{% url 'add_product' %}">Add Product</a></li>
-
                         </ul>
 
                     </div>
@@ -135,21 +129,46 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- =========================
-         LOADER SCRIPT
+         LOADER SCRIPT (FIXED)
     ========================= -->
     <script>
+
+        // PAGE LOAD COMPLETE → HIDE LOADER
         window.addEventListener("load", function () {
-            document.getElementById("page-loader").classList.add("hide");
+            const loader = document.getElementById("page-loader");
+
+            if (loader) {
+                setTimeout(() => {
+                    loader.classList.add("hide");
+                }, 300);
+            }
         });
 
-        // optional: show loader on internal links click
+        // SHOW LOADER ON INTERNAL LINKS ONLY
         document.querySelectorAll("a").forEach(link => {
-            link.addEventListener("click", function () {
-                if (this.href && this.href.indexOf(window.location.host) !== -1) {
-                    document.getElementById("page-loader").style.display = "flex";
+            link.addEventListener("click", function (e) {
+
+                const href = this.getAttribute("href");
+
+                // ignore external links, empty links, anchors
+                if (
+                    !href ||
+                    href.startsWith("#") ||
+                    href.startsWith("javascript") ||
+                    this.target === "_blank"
+                ) {
+                    return;
                 }
+
+                const loader = document.getElementById("page-loader");
+
+                if (loader) {
+                    loader.style.display = "flex";
+                }
+
             });
         });
+
     </script>
 
 </body>

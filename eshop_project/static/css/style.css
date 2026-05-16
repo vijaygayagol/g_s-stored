@@ -20,7 +20,7 @@ body {
 }
 
 /* =========================
-   PAGE LOADER (NEW ADDITION)
+   PAGE LOADER (FIXED + SAFE)
 ========================= */
 
 #page-loader {
@@ -33,9 +33,18 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
+    z-index: 99999;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
+/* hidden state (IMPORTANT FIX) */
+#page-loader.hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* spinner */
 .spinner {
     width: 65px;
     height: 65px;
@@ -48,13 +57,6 @@ body {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-}
-
-/* Optional fade hide */
-#page-loader.hide {
-    opacity: 0;
-    visibility: hidden;
-    transition: 0.3s ease;
 }
 
 /* =========================
