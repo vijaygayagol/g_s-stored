@@ -5,118 +5,260 @@
 
 {% block content %}
 
+<!-- =========================
+     ABOUT HERO SECTION
+========================= -->
 <section class="about-hero text-center text-white d-flex align-items-center">
-    <div class="container">
-        <h1 class="display-3 fw-bold">About GS-Shop</h1>
-        <p class="lead mt-3">
-            Your trusted destination for fashion, lifestyle, and premium shopping experiences.
+    <div class="hero-overlay"></div>
+
+    <div class="container position-relative z-2">
+        <h1 class="display-2 fw-bold mb-4">
+            About GS-Shop
+        </h1>
+
+        <p class="lead fs-3 mx-auto" style="max-width: 900px;">
+            Your trusted destination for fashion, lifestyle, electronics,
+            and premium shopping experiences with unbeatable quality.
         </p>
+
+        <a href="{% url 'product_list' %}"
+           class="btn btn-warning btn-lg rounded-pill px-5 py-3 mt-4 link-btn shadow">
+            Explore Store
+        </a>
     </div>
 </section>
 
-<!-- WHO WE ARE -->
+<!-- =========================
+     WHO WE ARE
+========================= -->
 <section class="container py-5">
-    <div class="row align-items-center">
-        <div class="col-md-6 mb-4">
-            <img src="{% static 'images/about_us.jpg' %}"
-                 alt="About eShop"
-                 class="img-fluid rounded-4 shadow-lg">
+    <div class="row align-items-center g-5">
+
+        <div class="col-lg-6">
+            <div class="about-image-wrapper">
+                <img src="{% static 'images/about_us.jpg' %}"
+                     alt="About GS-Shop"
+                     class="img-fluid rounded-4 shadow-lg about-main-img">
+            </div>
         </div>
 
-        <div class="col-md-6">
-            <h2 class="fw-bold text-warning mb-4">Who We Are</h2>
+        <div class="col-lg-6">
+            <div class="glass-card p-5">
 
-            <p class="fs-5 text-white">
-                eShop is a modern online shopping platform designed to bring customers
-                the latest trends in fashion, electronics, and lifestyle products at unbeatable prices.
-            </p>
+                <h2 class="fw-bold text-warning mb-4">
+                    Who We Are
+                </h2>
 
-            <p class="fs-5 text-white">
-                We focus on quality, affordability, and customer satisfaction while creating a premium shopping experience.
-            </p>
+                <p class="fs-5 text-white mb-4">
+                    GS-Shop is a premium e-commerce platform dedicated to delivering
+                    the latest fashion trends, electronics, and lifestyle essentials
+                    with superior customer satisfaction.
+                </p>
+
+                <p class="fs-5 text-white mb-4">
+                    Our goal is to blend affordability, quality, and innovation
+                    into one seamless online shopping experience.
+                </p>
+
+                <div class="row text-center mt-4">
+                    <div class="col-4">
+                        <h3 class="text-warning fw-bold">500+</h3>
+                        <p>Products</p>
+                    </div>
+
+                    <div class="col-4">
+                        <h3 class="text-warning fw-bold">1000+</h3>
+                        <p>Customers</p>
+                    </div>
+
+                    <div class="col-4">
+                        <h3 class="text-warning fw-bold">24/7</h3>
+                        <p>Support</p>
+                    </div>
+                </div>
+
+            </div>
         </div>
+
     </div>
 </section>
 
-<!-- FOUNDER SECTION -->
-<section class="container py-5 text-center">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
+<!-- =========================
+     FOUNDER SECTION
+========================= -->
+<section class="container py-5">
 
-            <div class="card p-4 shadow-lg border-0 bg-dark text-white">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-warning">
+            Meet Our Founder
+        </h2>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <div class="founder-card text-center p-5">
 
                 <img src="{% static 'images/vijay.jpeg' %}"
                      alt="Vijay Gopal Gayagol"
-                     class="rounded-circle mx-auto mb-3"
-                     width="150"
-                     height="150"
-                     style="object-fit: cover;">
+                     class="founder-img mb-4">
 
-                <h3 class="fw-bold text-warning">Vijay Gopal Gayagol</h3>
-                <p class="mb-2">Founder & Full Stack Developer</p>
+                <h3 class="fw-bold text-warning">
+                    Vijay Gopal Gayagol
+                </h3>
+
+                <p class="fs-5 mb-3">
+                    Founder & Full Stack Developer
+                </p>
+
+                <p class="lead text-light mx-auto" style="max-width: 750px;">
+                    Passionate about building secure, scalable, and visually
+                    stunning digital commerce solutions that empower businesses
+                    and deliver exceptional customer experiences.
+                </p>
+
+                <div class="mt-4">
+                    <span class="badge bg-warning text-dark px-3 py-2 m-1">Django</span>
+                    <span class="badge bg-warning text-dark px-3 py-2 m-1">Python</span>
+                    <span class="badge bg-warning text-dark px-3 py-2 m-1">AWS</span>
+                    <span class="badge bg-warning text-dark px-3 py-2 m-1">Full Stack</span>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+<!-- =========================
+     WHY CHOOSE US
+========================= -->
+<section class="container py-5">
+
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-warning">
+            Why Choose GS-Shop?
+        </h2>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card text-center p-4 h-100">
+
+                <div class="feature-icon mb-3">
+                    <i class="bi bi-gem"></i>
+                </div>
+
+                <h4 class="fw-bold">Premium Quality</h4>
 
                 <p>
-                    Passionate developer behind GS-Shop, focused on building scalable,
-                    secure, and user-friendly e-commerce platforms.
+                    Carefully selected top-tier products ensuring
+                    superior quality and customer trust.
+                </p>
+
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card text-center p-4 h-100">
+
+                <div class="feature-icon mb-3">
+                    <i class="bi bi-cash-coin"></i>
+                </div>
+
+                <h4 class="fw-bold">Affordable Pricing</h4>
+
+                <p>
+                    Competitive pricing, exclusive offers,
+                    and unbeatable discounts every day.
+                </p>
+
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card text-center p-4 h-100">
+
+                <div class="feature-icon mb-3">
+                    <i class="bi bi-truck"></i>
+                </div>
+
+                <h4 class="fw-bold">Fast Delivery</h4>
+
+                <p>
+                    Secure, reliable, and quick delivery
+                    to ensure smooth customer satisfaction.
+                </p>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     MISSION SECTION
+========================= -->
+<section class="mission-section py-5">
+    <div class="container text-center">
+
+        <h2 class="fw-bold text-warning mb-4">
+            Our Mission
+        </h2>
+
+        <p class="fs-4 text-white mx-auto" style="max-width: 900px;">
+            To redefine online shopping by delivering innovative,
+            stylish, and reliable products while maintaining
+            excellence in service, trust, and customer satisfaction.
+        </p>
+
+    </div>
+</section>
+
+<!-- =========================
+     CONTACT SECTION
+========================= -->
+<section class="container py-5">
+
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-warning">
+            Contact Us
+        </h2>
+    </div>
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="glass-card p-5 text-center">
+
+                <p class="fs-5 mb-3">
+                    <i class="bi bi-envelope-fill text-warning"></i>
+                    support@eshop.com
+                </p>
+
+                <p class="fs-5 mb-3">
+                    <i class="bi bi-telephone-fill text-warning"></i>
+                    +91 7498000632
+                </p>
+
+                <p class="fs-5">
+                    <i class="bi bi-geo-alt-fill text-warning"></i>
+                    At - Sulaj, Post - Palshi Supo,
+                    Tq - Jalgaon Jamod,
+                    Dist - Buldhana,
+                    Maharashtra, India
                 </p>
 
             </div>
 
         </div>
-    </div>
-</section>
-
-<!-- WHY CHOOSE US -->
-<section class="container py-5">
-    <div class="text-center mb-5">
-        <h2 class="fw-bold text-warning">Why Choose Us?</h2>
-    </div>
-
-    <div class="row g-4">
-
-        <div class="col-md-4">
-            <div class="card h-100 p-4 text-center">
-                <h4 class="fw-bold">Premium Quality</h4>
-                <p>We provide carefully selected products with top-notch quality standards.</p>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card h-100 p-4 text-center">
-                <h4 class="fw-bold">Affordable Prices</h4>
-                <p>Best deals, discounts, and competitive pricing for every customer.</p>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card h-100 p-4 text-center">
-                <h4 class="fw-bold">Fast Delivery</h4>
-                <p>Reliable shipping and secure packaging for a smooth shopping journey.</p>
-            </div>
-        </div>
 
     </div>
-</section>
 
-<!-- MISSION -->
-<section class="container py-5 text-center">
-    <h2 class="fw-bold text-warning mb-4">Our Mission</h2>
-
-    <p class="fs-5 text-white mx-auto" style="max-width: 850px;">
-        Our mission is to redefine online shopping by offering stylish products,
-        seamless user experience, and trustworthy service that customers can rely on every day.
-    </p>
-</section>
-
-<!-- CONTACT -->
-<section class="container py-5 text-center">
-    <h2 class="fw-bold text-warning mb-4">Contact Us</h2>
-
-    <p class="fs-5 text-white">Email: support@eshop.com</p>
-    <p class="fs-5 text-white">Phone: +91 7498000632</p>
-    <p class="fs-5 text-white">
-        Location: At - Sulaj, Post - Palshi Supo, Tq - Jalgaon Jamod, Dist - Buldhana, Maharashtra, India
-    </p>
 </section>
 
 {% endblock %}
