@@ -13,7 +13,7 @@ body {
                     rgba(0,0,0,0.45),
                     rgba(0,0,0,0.45)
                 ),
-                url("/static/images/about_us.jpg") no-repeat center center fixed;
+                url("/static/images/bg.jpg") no-repeat center center fixed;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
