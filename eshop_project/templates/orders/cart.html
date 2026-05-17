@@ -37,20 +37,11 @@
 
                 <h5>{{ product.name }}</h5>
 
-                <!-- SIZE -->
-                <p>
-                    <b>Size:</b> {{ product.size }}
-                </p>
+                <p><b>Size:</b> {{ product.size }}</p>
 
-                <!-- QUANTITY -->
-                <p>
-                    <b>Quantity:</b> {{ product.qty }}
-                </p>
+                <p><b>Quantity:</b> {{ product.qty }}</p>
 
-                <!-- STOCK -->
-                <p>
-                    <b>Available Stock:</b> {{ product.stock }}
-                </p>
+                <p><b>Available Stock:</b> {{ product.stock }}</p>
 
             </div>
 
@@ -70,19 +61,16 @@
             <!-- ACTIONS -->
             <div class="col-md-3 text-end">
 
-                <!-- INCREASE -->
                 <a href="{% url 'update_cart' product.id product.size 'increase' %}"
                    class="btn btn-sm btn-success mb-1">
                     +
                 </a>
 
-                <!-- DECREASE -->
                 <a href="{% url 'update_cart' product.id product.size 'decrease' %}"
                    class="btn btn-sm btn-warning mb-1">
                     -
                 </a>
 
-                <!-- REMOVE -->
                 <a href="{% url 'remove_from_cart' product.id product.size %}"
                    class="btn btn-sm btn-danger">
                     Remove
@@ -97,52 +85,73 @@
     {% endfor %}
 
     <!-- ========================= -->
-    <!-- COUPON SECTION -->
+    <!-- COUPON SECTION (UPDATED) -->
     <!-- ========================= -->
+
     {% if products %}
-    <div class="card p-4 shadow rounded-4 mb-4">
+    <div class="card border-0 shadow-lg rounded-4 mb-4">
 
-        <h4 class="mb-3 text-warning">
-            Apply Coupon
-        </h4>
+        <div class="card-body p-4">
 
-        <form method="POST" action="{% url 'apply_coupon' %}">
-            {% csrf_token %}
+            <!-- HEADER -->
+            <div class="d-flex align-items-center mb-3">
+                <div class="bg-warning rounded-circle d-flex align-items-center justify-content-center me-2"
+                     style="width:40px;height:40px;">
+                    🎟️
+                </div>
+                <div>
+                    <h5 class="mb-0">Have a Coupon?</h5>
+                    <small class="text-muted">Apply it and save more on your order</small>
+                </div>
+            </div>
 
-            <div class="row">
+            <!-- FORM -->
+            <form method="POST" action="{% url 'apply_coupon' %}">
+                {% csrf_token %}
 
-                <div class="col-md-8 mb-2">
+                <div class="input-group input-group-lg shadow-sm rounded-3 overflow-hidden">
+
+                    <span class="input-group-text bg-light border-0">
+                        💳
+                    </span>
+
                     <input type="text"
                            name="coupon_code"
-                           class="form-control"
-                           placeholder="Enter coupon code"
+                           class="form-control border-0"
+                           placeholder="Enter your coupon code here"
                            required>
+
+                    <button class="btn btn-warning px-4 fw-bold"
+                            type="submit">
+                        Apply
+                    </button>
+
+                </div>
+            </form>
+
+            <!-- SUCCESS MESSAGE -->
+            {% if coupon %}
+            <div class="alert alert-success d-flex align-items-center justify-content-between mt-4 mb-0 rounded-3 shadow-sm">
+
+                <div>
+                    ✅ Coupon <b>{{ coupon.code }}</b> applied successfully!
                 </div>
 
-                <div class="col-md-4 mb-2">
-                    <button type="submit"
-                            class="btn btn-warning w-100">
-                        Apply Coupon
-                    </button>
-                </div>
+                <span class="badge bg-success fs-6">
+                    {{ coupon.discount_percentage }}% OFF
+                </span>
 
             </div>
-        </form>
+            {% endif %}
 
-        {% if coupon %}
-        <div class="alert alert-success mt-3 mb-0">
-            Coupon Applied:
-            <b>{{ coupon.code }}</b>
-            ({{ coupon.discount_percentage }}% OFF)
         </div>
-        {% endif %}
-
     </div>
     {% endif %}
 
     <!-- ========================= -->
     <!-- TOTAL SECTION -->
     <!-- ========================= -->
+
     {% if products %}
     <div class="mt-4 p-4 bg-light rounded-4 shadow-sm text-dark">
 
