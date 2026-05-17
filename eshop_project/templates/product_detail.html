@@ -1,43 +1,152 @@
-
-
-
 {% extends 'base.html' %}
 {% block content %}
 
 <div class="container mt-5">
 
-    <!-- PRODUCT DETAILS -->
+    <!-- ========================= -->
+    <!-- PRODUCT DETAILS SECTION -->
+    <!-- ========================= -->
     <div class="row">
 
+        <!-- MAIN IMAGE + GALLERY -->
         <div class="col-md-6">
-            {% if product.image %}
-                <img src="{{ product.image.url }}" class="img-fluid rounded-4 shadow">
+
+            <!-- MAIN IMAGE -->
+            <div class="main-product-image text-center mb-3">
+                {% if product.image %}
+                    <img id="mainProductImage"
+                         src="{{ product.image.url }}"
+                         class="img-fluid rounded-4 shadow main-product-img"
+                         alt="{{ product.name }}">
+                {% endif %}
+            </div>
+
+            <!-- GALLERY THUMBNAILS -->
+            {% if gallery_images %}
+            <div class="d-flex flex-wrap gap-2 justify-content-center">
+
+                <!-- MAIN IMAGE THUMB -->
+                <img src="{{ product.image.url }}"
+                     class="gallery-thumb active-thumb"
+                     onclick="changeMainImage(this)"
+                     alt="Main Image">
+
+                <!-- EXTRA GALLERY IMAGES -->
+                {% for image in gallery_images %}
+                    <img src="{{ image.image.url }}"
+                         class="gallery-thumb"
+                         onclick="changeMainImage(this)"
+                         alt="Gallery Image">
+                {% endfor %}
+
+            </div>
             {% endif %}
+
         </div>
 
+        <!-- PRODUCT INFO -->
         <div class="col-md-6">
 
-            <h2 class="text-white">{{ product.name }}</h2>
+            <h2 class="text-white fw-bold">
+                {{ product.name }}
+            </h2>
 
             <p class="text-white">
                 {{ product.description }}
             </p>
 
-            <h4 class="text-warning">
-                <del>₹{{ product.price }}</del>
+            <!-- RATING -->
+            <div class="mb-3">
+
+                <h5 class="text-warning">
+                    ⭐ {{ average_rating }}/5
+                    <small class="text-light">
+                        ({{ total_reviews }} Reviews)
+                    </small>
+                </h5>
+
+            </div>
+
+            <!-- PRICE -->
+            <h4 class="text-warning mb-3">
+
+                {% if product.discount_percentage > 0 %}
+                    <del class="text-light">
+                        ₹{{ product.price }}
+                    </del>
+                {% endif %}
+
                 ₹{{ product.discounted_price }}
+
             </h4>
 
-            <a href="{% url 'add_to_cart' product.id %}"
-               class="btn btn-warning mt-3">
-                Add to Cart
-            </a>
+            <!-- STOCK -->
+            <p class="text-light">
+                <b>Stock:</b> {{ product.stock }}
+            </p>
+
+            <!-- SIZE OPTIONS -->
+            <form method="POST"
+                  action="{% url 'add_to_cart' product.id %}"
+                  class="mt-3">
+
+                {% csrf_token %}
+
+                <div class="mb-3">
+
+                    <label class="form-label text-white">
+                        Select Size
+                    </label>
+
+                    <select name="size"
+                            class="form-control w-50">
+
+                        {% for size in product.get_sizes_list %}
+                            <option value="{{ size }}">
+                                {{ size }}
+                            </option>
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <!-- BUTTONS -->
+                <div class="d-flex gap-3 flex-wrap">
+
+                    <!-- ADD TO CART -->
+                    <button type="submit"
+                            class="btn btn-warning btn-lg">
+                        Add to Cart
+                    </button>
+
+                    <!-- WISHLIST -->
+                    {% if user.is_authenticated %}
+                        {% if in_wishlist %}
+                            <a href="{% url 'wishlist' %}"
+                               class="btn btn-danger btn-lg">
+                                ❤️ View Wishlist
+                            </a>
+                        {% else %}
+                            <a href="{% url 'add_to_wishlist' product.id %}"
+                               class="btn btn-outline-light btn-lg">
+                                🤍 Add to Wishlist
+                            </a>
+                        {% endif %}
+                    {% endif %}
+
+                </div>
+
+            </form>
 
         </div>
 
     </div>
 
-    <!-- CUSTOMER REVIEWS -->
+
+    <!-- ========================= -->
+    <!-- CUSTOMER REVIEWS SECTION -->
+    <!-- ========================= -->
     <div class="mt-5">
 
         <h3 class="text-warning mb-4">
@@ -53,7 +162,9 @@
                 Add Your Review
             </h5>
 
-            <form method="POST" action="{% url 'add_review' product.id %}">
+            <form method="POST"
+                  action="{% url 'add_review' product.id %}">
+
                 {% csrf_token %}
 
                 <div class="mb-3">
@@ -62,12 +173,16 @@
                         Rating
                     </label>
 
-                    <select name="rating" class="form-control" required>
+                    <select name="rating"
+                            class="form-control"
+                            required>
+
                         <option value="5">⭐⭐⭐⭐⭐ (5)</option>
                         <option value="4">⭐⭐⭐⭐ (4)</option>
                         <option value="3">⭐⭐⭐ (3)</option>
                         <option value="2">⭐⭐ (2)</option>
                         <option value="1">⭐ (1)</option>
+
                     </select>
 
                 </div>
@@ -109,12 +224,13 @@
 
         {% endif %}
 
-        <!-- ALL USER REVIEWS -->
+
+        <!-- ALL REVIEWS -->
         {% for review in reviews %}
 
         <div class="card p-3 mb-3 shadow rounded-4">
 
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between flex-wrap">
 
                 <h5 class="text-warning">
                     {{ review.user.username }}
@@ -151,5 +267,52 @@
     </div>
 
 </div>
+
+
+<!-- ========================= -->
+<!-- IMAGE GALLERY SCRIPT -->
+<!-- ========================= -->
+<script>
+function changeMainImage(element) {
+    document.getElementById("mainProductImage").src = element.src;
+
+    document.querySelectorAll(".gallery-thumb").forEach(img => {
+        img.classList.remove("active-thumb");
+    });
+
+    element.classList.add("active-thumb");
+}
+</script>
+
+
+<!-- ========================= -->
+<!-- CUSTOM CSS -->
+<!-- ========================= -->
+<style>
+.main-product-img {
+    max-height: 500px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.gallery-thumb {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: 0.3s;
+}
+
+.gallery-thumb:hover {
+    transform: scale(1.05);
+    border-color: #ffc107;
+}
+
+.active-thumb {
+    border-color: #ffc107;
+}
+</style>
 
 {% endblock %}
