@@ -449,9 +449,10 @@ def product_detail(request, slug):
     ).order_by('-created_at')
 
     # PRODUCT GALLERY
-    gallery_images = ProductImage.objects.filter(
-        product=product
-    )
+    # gallery_images = ProductImage.objects.filter(
+    #     product=product
+    # )
+    gallery_images = product.gallery_images.all()
 
     # AVERAGE RATING
     total_reviews = reviews.count()

@@ -223,9 +223,9 @@
 #         help_text="Example: S,M,L,XL"
 #     )
 #
-#     # image = models.ImageField(
-#     #     upload_to='products/'
-#     # )
+    # image = models.ImageField(
+    #     upload_to='products/'
+    # )
 #     image = CloudinaryField('image', folder='products')
 #
 #     available = models.BooleanField(
@@ -343,6 +343,11 @@ class Category(models.Model):
         blank=True,
         null=True
     )
+    # image = models.ImageField(
+    #         upload_to='categories/',
+    #         blank=True,
+    #         null=True
+    #     )
 
     def __str__(self):
         return self.name
@@ -397,6 +402,9 @@ class Product(models.Model):
         'image',
         folder='products'
     )
+    # image = models.ImageField(
+    #     upload_to='products/'
+    # )
 
     available = models.BooleanField(
         default=True
@@ -454,6 +462,9 @@ class ProductImage(models.Model):
         'image',
         folder='product_gallery'
     )
+    # image = models.ImageField(
+    #     upload_to='product_gallery/'
+    # )
 
     created_at = models.DateTimeField(
         auto_now_add=True
